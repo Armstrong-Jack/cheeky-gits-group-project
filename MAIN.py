@@ -1,4 +1,12 @@
 
+class product:
+    def __init__(self, name, id, quantity, price):
+        self.name = name
+        self.id = int(id)
+        self.quantity = int(quantity)
+        self.price = int(price) 
+
+
 
 
 
