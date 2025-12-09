@@ -1,0 +1,1 @@
+product =  {101:  { "Name": "Laptop", "price": 99.99, "quantity": 20}} 
