@@ -17,7 +17,11 @@ class Student(Person):
     pass
 
 
-s1 = Student("Tom", "Duffy" 15)
+#s1 = Student("Tom", "Duffy" 15)
 
 
 
+players = []
+players.append(x)
+
+print(players[0].first_name)
