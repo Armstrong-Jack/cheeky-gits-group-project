@@ -33,19 +33,6 @@ while True:
         print(product)
         break
             
-            
-
-
-
-
-
-
-
-
-
-
-
-
     elif user_choice == "r":
         print("you have selected to remove a file")
     elif user_choice == "q":
