@@ -9,9 +9,13 @@ def load_data():
     except FileNotFoundError:
         print("Error: File Not found\n creating file")
         with open("inventory.json", "w") as f:
-            json.dump([], f)
-    #returns the data inside of the json file        
-    return inventory_data
+            inventory_data =json.dump([], f)
+
+    product = {int(k): v for k, v in inventory_data.items()}
+
+    #returns the data inside of the json file
+    print(product)   
+    return product
 
 
 
@@ -103,15 +107,15 @@ def item_search(inventory):
     user_choice = input("how would you like to search. by ID(1) or by Name(2)")
 
     if user_choice == "1":
-
-
-        for id, product_details in product.items():
-            while True:
+        while True:
                 try:
                     entered_id =int(input("please enter the products id"))
                     break
                 except ValueError:
                     print("entered wrong value. neededs to be number")
+
+        for id, product_details in product.items():
+            
             if id == entered_id:
                 selected_id = id
                 selected_product = product_details
@@ -132,7 +136,7 @@ def item_search(inventory):
 
 def update_item(inventory):
     product = inventory 
-    selected_product_for_update = item_search(product)
+    selected_product_for_update = int(item_search(product))
     print(selected_product_for_update)
     print(product[selected_product_for_update]["name"])
 
@@ -147,34 +151,30 @@ def update_item(inventory):
             return product 
 
 
-            break
         elif user_choice == "2":
             while True:
                 try:
-                    product[selected_product_for_update]["price"] = int(input("please enter the product's price"))
+                    product[selected_product_for_update]["price"] = float(input("please enter the product's price"))
                     print(product[selected_product_for_update])
                     return product
-                    break
                 except ValueError:
                     print("entered wrong value needs to be numbers")
 
-            break
         elif user_choice == "3":
             while True:
                 try:
                     product[selected_product_for_update]["quantity"] = int(input("please enter the product's quantity"))
                     print(product[selected_product_for_update])
-                    break
+                    return product
                 except ValueError:
                     print("entered wrong value needs to be numbers")
 
-            break
         else:
             print("wrong value entered please try again")
 
 
 def main():
-    product = load_data
+    product = load_data()
 
     while True:
 
@@ -193,6 +193,7 @@ def main():
         elif choice == "3":
             print("you have chosen to Update item")
             new_product_data = update_item(product)
+            save_inventory(new_product_data)
 
         elif choice == "4":
             print("you have chosen to Search")
