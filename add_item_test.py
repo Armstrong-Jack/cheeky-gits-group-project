@@ -3,7 +3,7 @@ product =  {
     102: {"name": "PC", "price": 200, "quantity": 10},
     } 
 ids = list(product.keys())
-print(ids)
+
 
 
 while True:
