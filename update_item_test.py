@@ -47,24 +47,38 @@ def item_search(data_to_be_searched):
 
 selected_product_for_update = item_search(product)
 print(selected_product_for_update)
-print(product.keys(selected_product_for_update))
+print(product[selected_product_for_update]["name"])
 
 
 while True:
-    user_choice = input("would you like to update the prodects quantity(1) or the products name(2) and finnally its price(3)")
+    user_choice = input("would you like to update the prodects name(1) or the products price(2) and finnally its quantity(3)")
 
     if user_choice == "1":
         print(selected_product_for_update)
+        product[selected_product_for_update]["name"] = input("enter product name")
+        print(product[selected_product_for_update])
         
 
 
         break
     elif user_choice == "2":
-        print("f")
+        while True:
+            try:
+                product[selected_product_for_update]["price"] = int(input("please enter the product's price"))
+                print(product[selected_product_for_update])
+                break
+            except ValueError:
+                print("entered wrong value needs to be numbers")
 
         break
     elif user_choice == "3":
-        print("f")
+        while True:
+            try:
+                product[selected_product_for_update]["quantity"] = int(input("please enter the product's quantity"))
+                print(product[selected_product_for_update])
+                break
+            except ValueError:
+                print("entered wrong value needs to be numbers")
 
         break
     else:

@@ -1,4 +1,7 @@
-product =  {101:  { "Name": "Laptop", "price": 99.99, "quantity": 20}} 
+product =  {
+    101:  {"name": "Laptop", "price": 99.99, "quantity": 20},
+    102: {"name": "PC", "price": 200, "quantity": 10},
+    } 
 ids = list(product.keys())
 print(ids)
 
@@ -11,7 +14,7 @@ while True:
     if user_choice == "a":
         print("you have selected to add a product")
         
-        new_product["Name"] = input("enter product name")
+        new_product["name"] = input("enter product name")
 
         while True:
             try:
@@ -31,10 +34,29 @@ while True:
         product[ids[len(ids)-1]+1] = new_product
         print(new_product)
         print(product)
-        break
+        
             
     elif user_choice == "r":
         print("you have selected to remove a file")
+
+        while True: 
+            try:
+                entered_product_id = int(input("please enter the id of the item you want to remove"))
+                break
+            except ValueError:
+                print("you have entered the wrong value. it needs to be numbers")
+            
+        for id in ids:
+            if id == entered_product_id:
+                id_to_remove = id
+                index_of_element_to_remove = ids.index(id_to_remove)
+                product.pop(id_to_remove)
+                ids.pop(index_of_element_to_remove)
+                print(ids)
+                print(product)
+            else:
+                print("you have entered an incorrect id")
+
     elif user_choice == "q":
         print("you have selected to return to the menu")
     else:
