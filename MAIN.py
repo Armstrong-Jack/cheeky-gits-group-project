@@ -11,7 +11,8 @@ def load_data():
         with open("inventory.json", "w") as f:
             inventory = {}
             inventory_data= add_item(inventory)
-            json.dump(inventory_data, f)
+            json.dump(inventory_data, f, indent= 4)
+            print(inventory_data)
 
     product = {int(ids): product_details for ids, product_details in inventory_data.items()}
 
@@ -65,14 +66,14 @@ def add_item(inventory):
         except ValueError:
             print("entered wrong value needs to be numbers")
 
-        try:
-            product[ids[len(ids)-1]+1] = new_product
-        except IndexError:
-            product[101] = new_product
+    try:
+        product[ids[len(ids)-1]+1] = new_product
+    except IndexError:
+        product[101] = new_product
             
-        print(new_product)
-        print(product)
-        return(product)
+    print(new_product)
+    print(product)
+    return(product)
         
 
 
@@ -86,7 +87,7 @@ def add_remove_item(inventory):
 
 
         if user_choice == "a":
-            product =add_item(product)
+            product = add_item(product)
             return product
 
             
