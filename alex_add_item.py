@@ -1,7 +1,7 @@
 
 """this is the add item to the dictionary below task for Alax
 DO NOT REMOVE OR CHANGE the structure for the dictionary below
-your example piece is display_table.py"""
+your example piece is add_item_test.py"""
 product =  {
     101:  {"name": "Laptop", "price": 99.99, "quantity": 20},
     102: {"name": "PC", "price": 200, "quantity": 10},
