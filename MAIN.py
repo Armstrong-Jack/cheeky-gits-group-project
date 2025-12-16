@@ -104,35 +104,39 @@ def add_remove_item(inventory):
 
 def item_search(inventory):
     product = inventory
-    user_choice = input("how would you like to search. by ID(1) or by Name(2)")
+   
 
-    if user_choice == "1":
-        while True:
-                try:
-                    entered_id =int(input("please enter the products id"))
-                    break
-                except ValueError:
-                    print("entered wrong value. neededs to be number")
+    while True:
+        user_choice = input("how would you like to search. by ID(1) or by Name(2)")
+        if user_choice == "1":
+            while True:
+                    try:
+                        entered_id =int(input("please enter the products id"))
+                        break
+                    except ValueError:
+                        print("entered wrong value. neededs to be number")
 
-        for id, product_details in product.items():
-            
-            if id == entered_id:
-                selected_id = id
-                selected_product = product_details
-                print(f"your selected id is {selected_id}")
-                return selected_id
+            for id, product_details in product.items():
+                
+                if id == entered_id:
+                    selected_id = id
+                    selected_product = product_details
+                    print(f"your selected id is {selected_id}")
+                    return selected_id
 
-    if user_choice == "2":
+        elif user_choice == "2":
 
-        entered_product_name = input("please enter the product name")
+            entered_product_name = input("please enter the product name")
 
-        for id, product_details in product.items():
-            
-            if product_details["name"] == entered_product_name:
-                selected_id = id
-                selected_product = product_details
-                print(f"you have selected this product{selected_product}")
-                return(selected_id)
+            for id, product_details in product.items():
+                
+                if product_details["name"] == entered_product_name:
+                    selected_id = id
+                    selected_product = product_details
+                    print(f"you have selected this product{selected_product}")
+                    return(selected_id)
+        else:
+            print("wrong value entered")
 
 def update_item(inventory):
     product = inventory 
