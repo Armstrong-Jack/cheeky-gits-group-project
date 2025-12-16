@@ -10,7 +10,7 @@ while True:
     user_choice = input("would you like to add(a) or remove(r) a product. or would you like to go back to menu(q)")
     new_product = {}
 
-
+#below is Alax's example piece
     if user_choice == "a":
         print("you have selected to add a product")
         
@@ -35,7 +35,7 @@ while True:
         print(new_product)
         print(product)
         
-            
+ # below is Tom MCgirr example piece           
     elif user_choice == "r":
         print("you have selected to remove a file")
 
