@@ -1,7 +1,7 @@
 
 """this is the ID and product name search task for Alan
 DO NOT REMOVE OR CHANGE the structure for the dictionary below
-your example piece is .py"""
+your example piece is id_name_search_test.py"""
 product =  {
     101:  {"name": "Laptop", "price": 99.99, "quantity": 20},
     102: {"name": "PC", "price": 200, "quantity": 10},
