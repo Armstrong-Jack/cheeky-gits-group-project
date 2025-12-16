@@ -7,13 +7,11 @@ def load_data():
             inventory_data = json.load(f)
             #if thier is no file it creates one
     except FileNotFoundError:
-        print("Error: File Not found\n creating file\nNeed an item please create one below")
-        inventory = {}
-        inventory_data = add_item(inventory)
+        print("Error: File Not found\n creating file")
         with open("inventory.json", "w") as f:
-            json.dump(inventory_data, f, indent=4)
+            inventory_data =json.dump([], f)
 
-    product = {int(ids): product_details for ids, product_details in inventory_data.items()}
+    product = {int(k): v for k, v in inventory_data.items()}
 
     #returns the data inside of the json file
     print(product)   
@@ -39,38 +37,6 @@ def data_table(inventory):
         print(f"{id}        {name}          {price}             {quantity}")
 
 
-def add_item(inventory):
-    product = inventory
-
-    ids = list(product.keys())
-    print("you have selected to add a product")
-    new_product = {}
-            
-    new_product["name"] = input("enter product name")
-
-    while True:
-        try:
-            new_product["price"] = int(input("please enter the product's price"))
-            break
-        except ValueError:
-            print("entered wrong value needs to be numbers")
-            
-    while True:
-        try:
-            new_product["quantity"] = int(input("please enter the product's quantity"))
-            break
-        except ValueError:
-            print("entered wrong value needs to be numbers")
-
-    try:
-        product[ids[len(ids)-1]+1] = new_product
-    except IndexError:
-        product[101] = new_product
-    print(new_product)
-    return(product)
-
-
-
 def add_remove_item(inventory):
     product = inventory
 
@@ -80,12 +46,34 @@ def add_remove_item(inventory):
 
     while True:
         user_choice = input("would you like to add(a) or remove(r) a product. or would you like to go back to menu(q)")
-    
+        new_product = {}
 
 
         if user_choice == "a":
-            product =add_item(product)
-            return product
+            print("you have selected to add a product")
+            
+            new_product["name"] = input("enter product name")
+
+            while True:
+                try:
+                    new_product["price"] = int(input("please enter the product's price"))
+                    break
+                except ValueError:
+                    print("entered wrong value needs to be numbers")
+            
+            while True:
+                try:
+                    new_product["quantity"] = int(input("please enter the product's quantity"))
+                    break
+                except ValueError:
+                    print("entered wrong value needs to be numbers")
+
+
+            product[ids[len(ids)-1]+1] = new_product
+            print(new_product)
+            print(product)
+            return(product)
+            
                 
         elif user_choice == "r":
             print("you have selected to remove a file")
@@ -116,23 +104,23 @@ def add_remove_item(inventory):
 
 def item_search(inventory):
     product = inventory
-   
-
+    ids = list(product.keys())
+    print(ids)
     while True:
-        user_choice = input("how would you like to search. by ID(1) or by Name(2)")
+        user_choice = input("how would you like to search. by ID(1) or by Name(2) or price Range(3)")
+
         if user_choice == "1":
-            while True:
+
+
+            for id in ids:
+                while True:
                     try:
                         entered_id =int(input("please enter the products id"))
                         break
                     except ValueError:
                         print("entered wrong value. neededs to be number")
-
-            for id, product_details in product.items():
-                
                 if id == entered_id:
                     selected_id = id
-                    selected_product = product_details
                     print(f"your selected id is {selected_id}")
                     return selected_id
 
@@ -146,9 +134,54 @@ def item_search(inventory):
                     selected_id = id
                     selected_product = product_details
                     print(f"you have selected this product{selected_product}")
-                    return(selected_id)
+                    return selected_id
+        
+        elif user_choice == "3":
+            ids_in_price_range = []
+            items_in_price_range = []
+            items_prices = []
+            user_options = []
+            while True:
+                while True:
+                    try:
+                        min_num = int(input("please Enter the smallest Number"))
+                        max_num = int(input("please enter the largest number"))
+                        if max_num >= min_num:
+                            break
+                        else:
+                            print("please enter the nubers in correct order")
+                    except ValueError:
+                        print("please enter a correct value")
+                
+                for id, product_details in product.items():
+                    if product_details["price"] <= max_num and product_details["price"] >= min_num:
+                        ids_in_price_range.append(id)
+                        product_name = product_details["name"]
+                        product_price = product_details["price"]
+                        items_in_price_range.append(product_name)
+                        items_prices.append(product_price)
+                        print(product_name, product_price)
+                
+                print(ids_in_price_range, items_in_price_range, items_prices)
+                for i in range(len(ids_in_price_range)):
+                    print(f"({i+1}).{ids_in_price_range[i]},  {items_in_price_range[i]},  £{items_prices[i]}")
+                    user_options.append(i)
+                
+                if ids_in_price_range > []:
+                    while True:
+                        try:
+                            user_choice = int(input("please enter the option you want"))
+                            user_choice -= 1
+                            break
+                        except ValueError:
+                            print("please enter a correct value")
+                    if user_choice in user_options:
+                        selected_id = ids_in_price_range[user_choice]
+                        print(f"you have selected {selected_id}")
+                        return selected_id
         else:
-            print("wrong value entered")
+            print("wrong Value entered")
+
 
 def update_item(inventory):
     product = inventory 
@@ -189,12 +222,24 @@ def update_item(inventory):
             print("wrong value entered please try again")
 
 
+def generate_low_stock_report(inventory):
+    product = inventory
+    low_quantity_product_names = []
+    low_quantity_product_id = []
+    BELOW_LOW_STOCK_FRESHHOLD = 5
+    for id, product_details in product.items():
+        if product_details["quantity"] <= BELOW_LOW_STOCK_FRESHHOLD:
+            low_quantity_product_names.append(product_details["name"])
+            low_quantity_product_id.append(id)
+            current_product_name = product_details["name"]
+            print(f"this item: {current_product_name} \n with the ID: {id}")
+
 def main():
     product = load_data()
 
     while True:
 
-        print("1.View Stock \n2.Add/remove Item \n3.Update Item \n4.Search \nq for Quit ")
+        print("1.View Stock \n2.Add/remove Item \n3.Update Item \n4.Search \n5.generate low quantity product list \nq for Quit ")
         choice = input("PLease enter the option you want")
 
         if choice == "1":
@@ -215,6 +260,9 @@ def main():
             print("you have chosen to Search")
             new_product_data = item_search(product)
             save_inventory(new_product_data)
+        
+        elif choice == "5":
+            generate_low_stock_report(product)
 
         elif choice == "q":
             print("you have chosen to Quit")
