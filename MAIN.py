@@ -7,11 +7,13 @@ def load_data():
             inventory_data = json.load(f)
             #if thier is no file it creates one
     except FileNotFoundError:
-        print("Error: File Not found\n creating file")
+        print("Error: File Not found\n creating file\nNeed an item please create one below")
         with open("inventory.json", "w") as f:
-            inventory_data =json.dump([], f)
+            inventory = {}
+            inventory_data= add_item(inventory)
+            json.dump(inventory_data, f)
 
-    product = {int(k): v for k, v in inventory_data.items()}
+    product = {int(ids): product_details for ids, product_details in inventory_data.items()}
 
     #returns the data inside of the json file
     print(product)   
@@ -37,42 +39,56 @@ def data_table(inventory):
         print(f"{id}        {name}          {price}             {quantity}")
 
 
+
+def add_item(inventory):
+    product = inventory
+    ids = list(product.keys())
+    new_product = {}
+
+
+
+    print("you have selected to add a product")
+            
+    new_product["name"] = input("enter product name")
+
+    while True:
+            try:
+                new_product["price"] = int(input("please enter the product's price"))
+                break
+            except ValueError:
+                print("entered wrong value needs to be numbers")
+            
+    while True:
+        try:
+            new_product["quantity"] = int(input("please enter the product's quantity"))
+            break
+        except ValueError:
+            print("entered wrong value needs to be numbers")
+
+        try:
+            product[ids[len(ids)-1]+1] = new_product
+        except IndexError:
+            product[101] = new_product
+            
+        print(new_product)
+        print(product)
+        return(product)
+        
+
+
 def add_remove_item(inventory):
     product = inventory
 
     ids = list(product.keys())
-
-
-
     while True:
         user_choice = input("would you like to add(a) or remove(r) a product. or would you like to go back to menu(q)")
         new_product = {}
 
 
         if user_choice == "a":
-            print("you have selected to add a product")
-            
-            new_product["name"] = input("enter product name")
+            product =add_item(product)
+            return product
 
-            while True:
-                try:
-                    new_product["price"] = int(input("please enter the product's price"))
-                    break
-                except ValueError:
-                    print("entered wrong value needs to be numbers")
-            
-            while True:
-                try:
-                    new_product["quantity"] = int(input("please enter the product's quantity"))
-                    break
-                except ValueError:
-                    print("entered wrong value needs to be numbers")
-
-
-            product[ids[len(ids)-1]+1] = new_product
-            print(new_product)
-            print(product)
-            return(product)
             
                 
         elif user_choice == "r":
