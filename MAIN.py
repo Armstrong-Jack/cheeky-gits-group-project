@@ -16,6 +16,7 @@ def load_data():
 
     product = {int(ids): product_details for ids, product_details in inventory_data.items()}
 
+
     #returns the data inside of the json file
     print(product)   
     return product
@@ -94,6 +95,7 @@ def add_remove_item(inventory):
                 
         elif user_choice == "r":
             print("you have selected to remove a file")
+            found_id = False 
 
             while True: 
                 try:
@@ -104,6 +106,7 @@ def add_remove_item(inventory):
                 
             for id in ids:
                 if id == entered_product_id:
+                    found_id = True
                     id_to_remove = id
                     index_of_element_to_remove = ids.index(id_to_remove)
                     product.pop(id_to_remove)
@@ -111,11 +114,15 @@ def add_remove_item(inventory):
                     print(ids)
                     print(product)
                     return product
-                else:
-                    print("you have entered an incorrect id")
+            if found_id == False:
+                print("you have entered an incorrect ID")
+                    
+
+        
 
         elif user_choice == "q":
             print("you have selected to return to the menu")
+            return 
         else:
             print("you have selected an incorrect option please try again")
 
