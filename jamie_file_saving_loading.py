@@ -12,3 +12,10 @@ product =  {
     107: {"name": "Xbox Controller", "price":100 , "quantity":200 },
     108: {"name":"PS4 Controller" , "price":100 , "quantity":200 },
     }
+
+    import json
+
+def load_data():
+    try:
+        with open("inventory.json", "r") as f:
+            inventory_data = json.load(f)
