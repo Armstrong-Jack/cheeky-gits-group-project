@@ -61,4 +61,8 @@ def load_data():
             inventory_data= add_item(inventory)
             json.dump(inventory_data, f, indent= 4)
             print(inventory_data)
+            
+def save_inventory(sample):
+    with open("inventory.json", "w") as fp:
+        json.dump(sample, fp, indent=4)
 
