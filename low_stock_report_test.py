@@ -1,4 +1,4 @@
-product =  {
+inventory =  {
     101:  {"name": "Laptop", "price": 99.99, "quantity": 20},
     102: {"name": "PC", "price": 200, "quantity": 3},
     103: {"name": "keyboard", "price":200 , "quantity": 200},
@@ -8,15 +8,16 @@ product =  {
     107: {"name": "Xbox Controller", "price":100 , "quantity":200 },
     108: {"name":"PS4 Controller" , "price":100 , "quantity":200 },
     } 
-
-low_quantity_product_names = []
-low_quantity_product_id = []
-BELOW_LOW_STOCK_FRESHHOLD = 5
-for id, product_details in product.items():
-    if product_details["quantity"] <= BELOW_LOW_STOCK_FRESHHOLD:
-        low_quantity_product_names.append(product_details["name"])
-        low_quantity_product_id.append(id)
-        current_product_name = product_details["name"]
-        print(f"this item: {current_product_name} \n with the ID: {id}")
+def generate_low_stock_report(inventory):
+    product = inventory
+    low_quantity_product_names = []
+    low_quantity_product_id = []
+    BELOW_LOW_STOCK_FRESHHOLD = 5
+    for id, product_details in product.items():
+        if product_details["quantity"] <= BELOW_LOW_STOCK_FRESHHOLD:
+            low_quantity_product_names.append(product_details["name"])
+            low_quantity_product_id.append(id)
+            current_product_name = product_details["name"]
+            print(f"this item: {current_product_name} \n with the ID: {id}")
 
 
