@@ -50,18 +50,22 @@ def add_item(inventory):
     print(product)
     return(product)
 
+#load data function
 def load_data():
     try:
         with open("inventory.json", "r") as f:
             inventory_data = json.load(f)
+    #allows for alternate path if file is not found
     except FileNotFoundError:
         print("Error: File Not found\nCreating new file\nFile needs an item for the file, please create one")
         with open("inventory.json", "w") as f:
             inventory = {}
+            #calls add item function if 'except' route runs
             inventory_data= add_item(inventory)
             json.dump(inventory_data, f, indent= 4)
+            #prints the inventory
             print(inventory_data)
-            
+#save data function           
 def save_inventory(sample):
     with open("inventory.json", "w") as fp:
         json.dump(sample, fp, indent=4)
