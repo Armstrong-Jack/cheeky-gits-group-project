@@ -1,25 +1,7 @@
 import json
 
 def load_data():
-    #opens the file 
-    try:
-        with open("inventory.json", "r") as f:
-            inventory_data = json.load(f)
-            #if thier is no file it creates one
-    except FileNotFoundError:
-        print("Error: File Not found\n creating file\nNeed an item please create one below")
-        with open("inventory.json", "w") as f:
-            inventory = {}
-            inventory_data= add_item(inventory)
-            json.dump(inventory_data, f, indent= 4)
-            print(inventory_data)
-
-    product = {int(ids): product_details for ids, product_details in inventory_data.items()}
-
-
-    #returns the data inside of the json file
-    print(product)   
-    return product
+    
 
 
 
@@ -28,17 +10,7 @@ def save_inventory(sample):
         json.dump(sample, fp, indent=4)
 
 def data_table(inventory):
-    product = inventory
-    ids=list(product.keys())
 
-
-    print("This is the curent inventory")
-    print("ID             name        price       quantity")
-    for id, product_details in product.items():
-        name = product_details["name"]
-        price = product_details["price"]
-        quantity = product_details["quantity"]
-        print(f"{id}        {name}          {price}             {quantity}")
 
 
 
@@ -94,79 +66,16 @@ def add_remove_item(inventory):
             
                 
         elif user_choice == "r":
-            print("you have selected to remove a file")
-            found_id = False 
 
-            while True: 
-                try:
-                    entered_product_id = int(input("please enter the id of the item you want to remove"))
-                    break
-                except ValueError:
-                    print("you have entered the wrong value. it needs to be numbers")
-                
-            for id in ids:
-                if id == entered_product_id:
-                    found_id = True
-                    id_to_remove = id
-                    index_of_element_to_remove = ids.index(id_to_remove)
-                    product.pop(id_to_remove)
-                    ids.pop(index_of_element_to_remove)
-                    print(ids)
-                    print(product)
-                    return product
-            if found_id == False:
-                print("you have entered an incorrect ID")
-                    
-
-        
-
-        elif user_choice == "q":
-            print("you have selected to return to the menu")
-            return 
-        else:
-            print("you have selected an incorrect option please try again")
 
 def item_search(inventory):
-    product = inventory
-    ids = list(product.keys())
-    print(ids)
-    while True:
-        user_choice = input("how would you like to search. by ID(1) or by Name(2) or price Range(3)")
 
-        if user_choice == "1":
-            while True:
-                try:
-                    entered_id =int(input("please enter the products id"))
-                    break
-                except ValueError:
-                    print("entered wrong value. neededs to be number")
-
-            for id, product_details in product.items():
-
-                if id == entered_id:
-                    selected_id = id
-                    selected_product_details = product_details
-                    print(f"your selected id is {selected_id} {product_details}")
-                    return selected_id
-
-        elif user_choice == "2":
-
-            entered_product_name = input("please enter the product name")
-
-            for id, product_details in product.items():
-                
-                if product_details["name"] == entered_product_name:
-                    selected_id = id
-                    selected_product = product_details
-                    print(f"you have selected this product{selected_product}\n{product_details}")
-                    return selected_id
         
         elif user_choice == "3":
             ids_in_price_range = []
             items_in_price_range = []
             items_prices = []
             user_options = []
-            posible_product_details = []
             while True:
                 while True:
                     try:
@@ -187,7 +96,6 @@ def item_search(inventory):
                         items_in_price_range.append(product_name)
                         items_prices.append(product_price)
                         print(product_name, product_price)
-                        posible_product_details.append(product_details)
                 
                 print(ids_in_price_range, items_in_price_range, items_prices)
                 for i in range(len(ids_in_price_range)):
@@ -204,8 +112,7 @@ def item_search(inventory):
                             print("please enter a correct value")
                     if user_choice in user_options:
                         selected_id = ids_in_price_range[user_choice]
-                        selected_product_details = posible_product_details[user_choice]
-                        print(f"you have selected {selected_id} {selected_product_details}")
+                        print(f"you have selected {selected_id}")
                         return selected_id
         else:
             print("wrong Value entered")
@@ -287,6 +194,7 @@ def main():
         elif choice == "4":
             print("you have chosen to Search")
             new_product_data = item_search(product)
+            save_inventory(new_product_data)
         
         elif choice == "5":
             generate_low_stock_report(product)
