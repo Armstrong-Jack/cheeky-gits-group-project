@@ -134,18 +134,19 @@ def item_search(inventory):
         user_choice = input("how would you like to search. by ID(1) or by Name(2) or price Range(3)")
 
         if user_choice == "1":
+            while True:
+                try:
+                    entered_id =int(input("please enter the products id"))
+                    break
+                except ValueError:
+                    print("entered wrong value. neededs to be number")
 
+            for id, product_details in product.items():
 
-            for id in ids:
-                while True:
-                    try:
-                        entered_id =int(input("please enter the products id"))
-                        break
-                    except ValueError:
-                        print("entered wrong value. neededs to be number")
                 if id == entered_id:
                     selected_id = id
-                    print(f"your selected id is {selected_id}")
+                    selected_product_details = product_details
+                    print(f"your selected id is {selected_id} {product_details}")
                     return selected_id
 
         elif user_choice == "2":
@@ -157,7 +158,7 @@ def item_search(inventory):
                 if product_details["name"] == entered_product_name:
                     selected_id = id
                     selected_product = product_details
-                    print(f"you have selected this product{selected_product}")
+                    print(f"you have selected this product{selected_product}\n{product_details}")
                     return selected_id
         
         elif user_choice == "3":
@@ -165,6 +166,7 @@ def item_search(inventory):
             items_in_price_range = []
             items_prices = []
             user_options = []
+            posible_product_details = []
             while True:
                 while True:
                     try:
@@ -185,6 +187,7 @@ def item_search(inventory):
                         items_in_price_range.append(product_name)
                         items_prices.append(product_price)
                         print(product_name, product_price)
+                        posible_product_details.append(product_details)
                 
                 print(ids_in_price_range, items_in_price_range, items_prices)
                 for i in range(len(ids_in_price_range)):
@@ -201,7 +204,8 @@ def item_search(inventory):
                             print("please enter a correct value")
                     if user_choice in user_options:
                         selected_id = ids_in_price_range[user_choice]
-                        print(f"you have selected {selected_id}")
+                        selected_product_details = posible_product_details[user_choice]
+                        print(f"you have selected {selected_id} {selected_product_details}")
                         return selected_id
         else:
             print("wrong Value entered")
@@ -283,7 +287,6 @@ def main():
         elif choice == "4":
             print("you have chosen to Search")
             new_product_data = item_search(product)
-            save_inventory(new_product_data)
         
         elif choice == "5":
             generate_low_stock_report(product)
