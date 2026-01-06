@@ -70,3 +70,5 @@ def save_inventory(sample):
     with open("inventory.json", "w") as fp:
         json.dump(sample, fp, indent=4)
 
+
+#Alot of error handling done by me. see in test table and git commits!!!
