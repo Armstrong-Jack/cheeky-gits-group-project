@@ -10,7 +10,25 @@ def save_inventory(sample):
         json.dump(sample, fp, indent=4)
 
 def data_table(inventory):
+    
+    product = inventory
 
+    ids=list(product.keys())
+
+
+    print("This is the curent inventory")
+
+    print("ID name price quantity")
+
+    for id, product_details in product.items():
+
+    name = product_details["name"]
+
+    price = product_details["price"]
+
+    quantity = product_details["quantity"]
+
+    print(f"{id} {name} {price} {quantity}")
 
 
 
