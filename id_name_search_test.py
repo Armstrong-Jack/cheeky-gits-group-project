@@ -9,7 +9,7 @@ inventory =  {
     108: {"name":"PS4 Controller" , "price":100 , "quantity":200 },
     } 
 
-
+#created by alan 
 def item_search(inventory):
     product = inventory
     ids = list(product.keys())
@@ -43,7 +43,9 @@ def item_search(inventory):
                     selected_product = product_details
                     print(f"you have selected this product{selected_product}")
                     return selected_id
-        
+       
+       
+        #created by jack
         elif user_choice == "3":
             ids_in_price_range = []
             items_in_price_range = []
