@@ -1,7 +1,21 @@
 import json
 
 def load_data():
-    
+    #opens the file
+    try:
+        with open("inventory.json", "r") as f:
+            inventory_data = json.load(f)
+    #if thier is no file it creates one
+    except FileNotFoundError:
+        print("Error: File Not found\n creating file\nNeed an item please create one below")
+        with open("inventory.json", "w") as f:
+            inventory = {}
+            inventory_data= add_item(inventory)
+            json.dump(inventory_data, f, indent= 4)
+
+    product = {int(ids): product_details for ids, product_details in inventory_data.items()}
+    #returns the data inside of the json file
+    return product
 
 
 
@@ -10,25 +24,15 @@ def save_inventory(sample):
         json.dump(sample, fp, indent=4)
 
 def data_table(inventory):
-    
     product = inventory
-
     ids=list(product.keys())
-
-
     print("This is the curent inventory")
-
     print("ID name price quantity")
-
     for id, product_details in product.items():
-
-    name = product_details["name"]
-
-    price = product_details["price"]
-
-    quantity = product_details["quantity"]
-
-    print(f"{id} {name} {price} {quantity}")
+        name = product_details["name"]
+        price = product_details["price"]
+        quantity = product_details["quantity"]
+        print(f"{id} {name} {price} {quantity}")
 
 
 
